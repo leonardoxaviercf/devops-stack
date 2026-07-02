@@ -10,3 +10,18 @@ volumes:
     driver: local
   grafana_data:
     driver: local
+
+services:
+  prom-http-simulator:
+    image: pierrevincent/prom-http-simulator:${SIMULATOR_VERSION}
+    container_name: idus-http-simulator
+    ports:
+      - "${SIMULATOR_PORT}:8080"
+    networks:
+      - monitoring_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--tries=1", "-O-", "http://localhost:8080/metrics"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

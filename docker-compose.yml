@@ -1,0 +1,12 @@
+version: '3.8'
+
+networks:
+  monitoring_network:
+    driver: bridge
+    name: idus_monitoring_net
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local

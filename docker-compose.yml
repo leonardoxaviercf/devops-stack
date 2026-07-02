@@ -48,3 +48,23 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
+  grafana-alloy:
+    image: grafana/alloy:${ALLOY_VERSION}
+    container_name: idus-alloy
+    ports:
+      - "${ALLOY_PORT}:12345"
+    volumes:
+      - ./alloy:/etc/alloy
+    command: [ "run", "--server.http.listen-addr=0.0.0.0:12345", "/etc/alloy/config.alloy" ]
+    networks:
+      - monitoring_network
+    restart: unless-stopped
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--tries=1", "-O-", "http://localhost:12345/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

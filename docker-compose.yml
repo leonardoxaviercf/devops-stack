@@ -62,11 +62,6 @@ services:
     depends_on:
       prometheus:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--tries=1", "-O-", "http://localhost:12345/ready"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
 
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION}
@@ -84,7 +79,7 @@ services:
     restart: unless-stopped
     depends_on:
       grafana-alloy:
-        condition: service_healthy
+        condition: service_started
     healthcheck:
       test: ["CMD", "wget", "-q", "--tries=1", "-O-", "http://localhost:3000/api/health"]
       interval: 10s

@@ -49,11 +49,13 @@ docker compose up -d
 
 O dashboard construído apresenta:
 
+* Distribuição de status HTTP em proporção (Sucesso vs Erro).
+
+* Taxa percentual de erros, calculada pela razão entre falhas (HTTP 500) e o total de requisições, fornecendo a saúde instantânea do sistema.
+
 * Taxa de requisições por segundo (dividida por rotas).
 
 * Latência em milissegundos (P95).
-
-* Distribuição de status HTTP em proporção (Sucesso vs Erro).
 
 ### Regra de Alerta
 ![Regra de Alerta](docs/regra_alertas.png)
